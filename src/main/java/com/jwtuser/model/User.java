@@ -56,6 +56,10 @@ public class User {
         this.status = status;
     }
 
+    public boolean getStatus() {
+        return status;
+    }
+
     public String getProfile() {
         return Profile;
     }
@@ -73,7 +77,6 @@ public class User {
     }
 
     public String getPassword() {
-        System.out.println("==========================================");
         return Password;
     }
 

@@ -1,7 +1,7 @@
 package com.jwtuser.config;
 
 import com.jwtuser.helper.JwtUtil;
-import com.jwtuser.services.CustomUserDetailsService;
+import com.jwtuser.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +20,7 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private UserService userService;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -43,9 +43,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 e.printStackTrace();
             }
 
-            UserDetails userDetails=this.customUserDetailsService.loadUserByUsername(username);
+            UserDetails userDetails=this.userService.loadUserByUsername(username);
 
-            //sceurity==null check
+            //security==null check
             if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null)
             {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());

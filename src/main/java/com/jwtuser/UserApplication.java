@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import java.util.Random;
+
+
 
 @SpringBootApplication
 public class UserApplication implements CommandLineRunner {
@@ -17,7 +18,7 @@ public class UserApplication implements CommandLineRunner {
 
 	Random random=new Random();
 
-//	public void createUsers(){
+	public void createUsers(){
 //		User user=new User();
 //		Long id=(long) random.nextInt(100);
 //		user.setId(id);
@@ -29,13 +30,11 @@ public class UserApplication implements CommandLineRunner {
 //
 //		User save=userRepository.save(user);
 //		System.out.println(save);
-//
-//	}
+
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(UserApplication.class, args);
-
-
 
 	}
 

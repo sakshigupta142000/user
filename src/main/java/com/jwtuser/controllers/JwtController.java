@@ -4,7 +4,7 @@ package com.jwtuser.controllers;
 import com.jwtuser.helper.JwtUtil;
 import com.jwtuser.model.JwtRequest;
 import com.jwtuser.model.JwtResponse;
-import com.jwtuser.services.CustomUserDetailsService;
+import com.jwtuser.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 //for methods who generate token for the first time.
 @RestController
-//@CrossOrigin
+@CrossOrigin
 public class JwtController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private UserService userService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -45,7 +45,7 @@ public class JwtController {
             throw new Exception("Bad Credentials");
         }
 
-        UserDetails userDetails=this.customUserDetailsService.loadUserByUsername(jwtRequest.getUsername());
+        UserDetails userDetails=this.userService.loadUserByUsername(jwtRequest.getUsername());
         String token =this.jwtUtil.generateToken(userDetails);
         System.out.println("JWT"+token);
 

@@ -1,5 +1,6 @@
 package com.jwtuser.services;
 
+import com.jwtuser.dto.UserRequest;
 import com.jwtuser.model.CustomerUserDetails;
 import com.jwtuser.model.User;
 import com.jwtuser.repo.UserRepository;
@@ -10,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
     @Override
@@ -18,8 +19,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
         final User user = this.userRepository.findByUsername(username);
-
-        System.out.println("====================================");
         System.out.println(user);
         if(user==null)
         {
@@ -27,16 +26,16 @@ public class CustomUserDetailsService implements UserDetailsService {
         }else {
             return new CustomerUserDetails(user);
         }
-
-
-//        if(username.equals("sakshi"))
-////        {
-////            return new User("sakshi","sakshi123",new ArrayList<>());
-////        }
-////        else{
-////            throw new UsernameNotFoundException("user not found !! ");
-////        }
-
-
     }
+    public User createUser(UserRequest userRequest){
+        User user =new User();
+        user.setUsername(userRequest.getUsername());
+        user.setEmail(userRequest.getEmail());
+        user.setPassword(userRequest.getPassword());
+        user.setStatus(true);
+        user.setProfile("Developer");
+        userRepository.save(user);
+        return user;
+    }
+
 }
