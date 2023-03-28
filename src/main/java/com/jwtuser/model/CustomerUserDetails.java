@@ -12,14 +12,10 @@ public class CustomerUserDetails implements UserDetails {
     private User user;
 
     public CustomerUserDetails(User user) {
-//        System.out.println("---------------------------------------------------------");
         System.out.println(user);
         this.user = user;
     }
 
-//    public void setUser(User user){
-//        this.user=user;
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

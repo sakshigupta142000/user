@@ -35,17 +35,6 @@ public class ExceptionGenerator extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    @ExceptionHandler(CustomExceptions.ResourceNotFound.class)
-//    public ResponseEntity<Object> handleResourceNotFoundException(CustomExceptions.ResourceNotFound ex, WebRequest request){
-//        ErrorResponse response = new ErrorResponse(ex.getLocalizedMessage());
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-//    }
-//
-//    @ExceptionHandler(CustomExceptions.BadRequest.class)
-//    public ResponseEntity<Object> handleBadRequestException(CustomExceptions.BadRequest ex, WebRequest request){
-//        ErrorResponse response = new ErrorResponse(ex.getLocalizedMessage());
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-//    }
+
 
 }

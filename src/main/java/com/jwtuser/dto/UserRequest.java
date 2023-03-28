@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+
 public class UserRequest {
 
     @NotNull(message="username is required")
@@ -18,7 +19,7 @@ public class UserRequest {
     @NotNull(message="password is required")
     @Size(min=5,message="password is too short")
     @Size(max = 20, message = "password is too long")
-    private String Password;
+    private String password;
 
     public String getUsername() {
         return username;
@@ -37,17 +38,17 @@ public class UserRequest {
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
-    public UserRequest(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        Password = password;
-    }
+//    public UserRequest(String username, String email, String password) {
+//        this.username = username;
+//        this.email = email;
+//        this.Password = password;
+//    }
 
 
 
