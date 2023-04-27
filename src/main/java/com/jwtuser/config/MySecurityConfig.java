@@ -13,7 +13,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebMvc
@@ -31,14 +35,22 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+        corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
+        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setExposedHeaders(Arrays.asList("Authorization"));
         http
                 .csrf()
                 .disable()
                 .cors()
+                .configurationSource(request -> corsConfiguration)
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/token").permitAll()
                 .antMatchers("/signup").permitAll()
+                .antMatchers("/allUsers").permitAll()
                 .antMatchers("/internal/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

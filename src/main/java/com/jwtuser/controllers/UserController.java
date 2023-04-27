@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -33,6 +34,13 @@ public class UserController {
         userResponse.setProfile(user.getProfile());
         return userResponse;
     }
+
+    @GetMapping("/allUsers")
+    public List<UserResponse> getAllUserResponse(){
+        List<UserResponse>userResponses=userService.getAllUserResponse();
+        return userResponses;
+    }
+
 
     @RequestMapping("/getusers")
     public String getUser(){

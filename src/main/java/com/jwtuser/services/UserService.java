@@ -1,6 +1,7 @@
 package com.jwtuser.services;
 
 import com.jwtuser.dto.UserRequest;
+import com.jwtuser.dto.UserResponse;
 import com.jwtuser.model.CustomerUserDetails;
 import com.jwtuser.model.User;
 import com.jwtuser.repo.UserRepository;
@@ -9,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -39,6 +43,26 @@ public class UserService implements UserDetailsService {
     }
     public User getUser(Long id){
         return userRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
+
+    public UserResponse getUserResponses(User user){
+        UserResponse userResponse=new UserResponse();
+        userResponse.setId(user.getId());
+        userResponse.setUsername(user.getUsername());
+        userResponse.setStatus(user.getStatus());
+        userResponse.setEmail(user.getEmail());
+        userResponse.setProfile(user.getProfile());
+        return userResponse;
+    }
+
+
+    public List<UserResponse> getAllUserResponse(){
+        Iterable<User> users=userRepository.findAll();
+        List<UserResponse> userResponses=new ArrayList<>();
+        for(User user: users){
+            userResponses.add(getUserResponses(user));
+        }
+        return userResponses;
     }
 
 }

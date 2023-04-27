@@ -1,6 +1,7 @@
 package com.jwtuser.controllers;
 
 
+import com.jwtuser.dto.UserResponse;
 import com.jwtuser.helper.JwtUtil;
 import com.jwtuser.model.JwtRequest;
 import com.jwtuser.model.JwtResponse;
@@ -14,9 +15,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 //for methods who generate token for the first time.
 @RestController
 @CrossOrigin
+
 public class JwtController {
 
     @Autowired
@@ -51,4 +55,11 @@ public class JwtController {
 
         return ResponseEntity.ok(new JwtResponse(token));
     }
+
+
+//    @GetMapping("/getcurrentuser")
+//    public UserDetails getCurrentUser(Principal principal){
+//        return this.userService.loadUserByUsername(principal.getName());
+//
+//    }
 }
