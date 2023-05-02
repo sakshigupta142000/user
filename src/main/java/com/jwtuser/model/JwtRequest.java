@@ -1,23 +1,23 @@
 package com.jwtuser.model;
 
 public class JwtRequest {
-    String username;
+    String email;
     String password;
 
     public JwtRequest() {
     }
 
-    public JwtRequest(String username, String password) {
-        this.username = username;
+    public JwtRequest(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -31,7 +31,7 @@ public class JwtRequest {
     @Override
     public String toString() {
         return "JwtRequest{" +
-                "username='" + username + '\'' +
+                "username='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

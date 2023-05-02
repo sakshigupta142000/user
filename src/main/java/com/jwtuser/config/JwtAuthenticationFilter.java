@@ -44,6 +44,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 e.printStackTrace();
             }
 
+            System.out.println("----------------user----------------------------");
+            System.out.println(username);
             UserDetails userDetails=this.userService.loadUserByUsername(username);
 
             //security==null check

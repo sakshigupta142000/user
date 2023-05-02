@@ -1,10 +1,10 @@
 package com.jwtuser.controllers;
 
 
+import com.jwtuser.dto.TokenResponse;
 import com.jwtuser.dto.UserResponse;
 import com.jwtuser.helper.JwtUtil;
 import com.jwtuser.model.JwtRequest;
-import com.jwtuser.model.JwtResponse;
 import com.jwtuser.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +14,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 
 //for methods who generate token for the first time.
 @RestController
@@ -38,7 +36,7 @@ public class JwtController {
         try
         {
 
-            this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(),jwtRequest.getPassword()));
+            this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getEmail(),jwtRequest.getPassword()));
         }catch(UsernameNotFoundException e)
         {
             e.printStackTrace();
@@ -49,11 +47,14 @@ public class JwtController {
             throw new Exception("Bad Credentials");
         }
 
-        UserDetails userDetails=this.userService.loadUserByUsername(jwtRequest.getUsername());
+        UserDetails userDetails=this.userService.loadUserByUsername(jwtRequest.getEmail());
         String token =this.jwtUtil.generateToken(userDetails);
+        UserResponse user=this.userService.getUserByEmail(jwtRequest.getEmail());
+        TokenResponse tokenResponse= new TokenResponse();
+        tokenResponse.setToken(token);
+        tokenResponse.setUser(user);
         System.out.println("JWT"+token);
-
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(tokenResponse);
     }
 
 

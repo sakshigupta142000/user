@@ -19,10 +19,10 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
 
-        final User user = this.userRepository.findByUsername(username);
+        final User user = this.userRepository.findByEmail(email);
         System.out.println(user);
         if(user==null)
         {
@@ -32,6 +32,10 @@ public class UserService implements UserDetailsService {
         }
     }
     public User createUser(UserRequest userRequest){
+        User existinguser = this.userRepository.findByEmail(userRequest.getEmail());
+        if(existinguser!=null){
+            throw new RuntimeException("User email is already exist");
+        }
         User user =new User();
         user.setUsername(userRequest.getUsername());
         user.setEmail(userRequest.getEmail());
@@ -45,6 +49,9 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
+    public UserResponse getUserByEmail(String email){
+        return getUserResponses(userRepository.findByEmail(email));
+    }
     public UserResponse getUserResponses(User user){
         UserResponse userResponse=new UserResponse();
         userResponse.setId(user.getId());
@@ -54,6 +61,7 @@ public class UserService implements UserDetailsService {
         userResponse.setProfile(user.getProfile());
         return userResponse;
     }
+
 
 
     public List<UserResponse> getAllUserResponse(){
