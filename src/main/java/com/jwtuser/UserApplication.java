@@ -1,6 +1,4 @@
 package com.jwtuser;
-
-import com.jwtuser.model.User;
 import com.jwtuser.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
