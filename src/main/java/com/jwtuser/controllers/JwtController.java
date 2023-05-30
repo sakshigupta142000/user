@@ -1,6 +1,4 @@
 package com.jwtuser.controllers;
-
-
 import com.jwtuser.dto.TokenResponse;
 import com.jwtuser.dto.UserResponse;
 import com.jwtuser.helper.JwtUtil;
