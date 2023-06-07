@@ -6,6 +6,7 @@ import com.jwtuser.dto.UserResponse;
 import com.jwtuser.model.User;
 import com.jwtuser.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,6 +18,10 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @RequestMapping("/welcome")
     public String welcome(){
         String text="this is private page";
@@ -25,7 +30,7 @@ public class UserController {
     }
     @PostMapping("/signup")
     public UserResponse signup(@Valid @RequestBody UserRequest userRequest) {
-        User user= userService.createUser(userRequest);
+        User user= userService.createUser(userRequest,bCryptPasswordEncoder);
         UserResponse userResponse=new UserResponse();
         userResponse.setId(user.getId());
         userResponse.setStatus(user.getStatus());

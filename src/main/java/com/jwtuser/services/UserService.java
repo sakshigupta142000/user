@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class UserService implements UserDetailsService {
             return new CustomerUserDetails(user);
         }
     }
-    public User createUser(UserRequest userRequest){
+    public User createUser(UserRequest userRequest, PasswordEncoder passwordEncoder){
         User existinguser = this.userRepository.findByEmail(userRequest.getEmail());
         if(existinguser!=null){
             throw new RuntimeException("User email is already exist");
@@ -39,7 +40,7 @@ public class UserService implements UserDetailsService {
         User user =new User();
         user.setUsername(userRequest.getUsername());
         user.setEmail(userRequest.getEmail());
-        user.setPassword(userRequest.getPassword());
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         user.setStatus(true);
         user.setProfile("Developer");
         userRepository.save(user);
